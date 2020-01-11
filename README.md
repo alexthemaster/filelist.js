@@ -3,6 +3,8 @@
 
 ### Note: this library doesn't have rate limiting implemented! You can only request content from FileList.ro's API 150 times an hour or roughly 2.5 times a minute, so use with caution!
 
+Installation: `npm install filelist.js`
+
 Usage example: 
 ```js
 const FileList = require('filelist.js');
@@ -61,6 +63,7 @@ const returned = {
 Your passkey can be obtained from [here](https://filelist.ro/my.php)
 
 Category IDs:
+
 | ID | Name             |
 |----|------------------|
 |  1 | Filme SD         |
