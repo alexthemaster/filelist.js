@@ -1,0 +1,25 @@
+{
+  "name": "filelist.js",
+  "version": "1.0.0",
+  "description": "A FileList API Wrapper made using Node.js",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexthemaster/filelist.js.git"
+  },
+  "keywords": [
+    "filelist",
+    "api",
+    "filelist",
+    "api"
+  ],
+  "author": "Alex Kovacs (alex@atm.moe)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexthemaster/filelist.js/issues"
+  },
+  "homepage": "https://github.com/alexthemaster/filelist.js#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}
