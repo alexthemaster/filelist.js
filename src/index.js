@@ -22,6 +22,9 @@ const imdb_regex = /^([1-9]+|tt[1-9]+)/g;
  * @property {Number} comments The number of comments on the torrent
  * @property {Number} files The number of files this torrent has
  * @property {String} small_description A small description of the torrent
+ * @property {Object} [tv] An object containing the season / episode details of this torrent - if applies
+ * @property {Number|null} [tv.season]
+ * @property {Number|null} [tv.episode] 
  */
 
 /**
@@ -37,8 +40,8 @@ class FileList {
         if (!username) throw new Error('Please enter your FileList username.');
         if (!passkey) throw new Error(`Please enter your FileList passkey. This can be found at ${passkey_url}`);
 
-        Object.defineProperty(this, 'username', { value: username });
-        Object.defineProperty(this, 'passkey', { value: passkey });
+        const base64 = Buffer.from(`${username}:${passkey}`).toString('base64');
+        Object.defineProperty(this, 'auth', { value: `Basic ${base64}` });
     }
 
     /**
@@ -51,6 +54,9 @@ class FileList {
      * @param {Number} [params.moderated] Valid values: 0, 1
      * @param {Number} [params.internal] Valid values: 0, 1
      * @param {Number} [params.freeleech] Valid values: 0, 1
+     * @param {String} [params.output] Valid values: json, rss. - defaults to JSON.
+     * @param {Number} [params.season] Valid values: integers
+     * @param {Number} [params.episode] Valid values: integers
      * @returns {Promise<Torrent[]>}
      */
     async search(params = { type: 'name' }) {
@@ -69,11 +75,20 @@ class FileList {
 
         if (params.freeleech && (isNaN(params.freeleech) || ![0, 1].includes(params.freeleech))) { console.info("You didn't provide a valid freeleech value. Valid values: 0, 1"); params.freeleech = '' };
 
+        if (params.output && !['json', 'rss'].includes(params.output.toLowerCase())) { console.info("You didn't provide a valid output, defaulting to the output of JSON."); params.output = 'json'; }
+
+        if (params.season && (isNaN(params.season))) { console.info("You didn't provide a valid integer value for season. Valid values: integers"); params.season = '' };
+
+        if (params.episode && (isNaN(params.episode))) { console.info("You didn't provide a valid integer value for episode. Valid values: integers"); params.episode = '' };
+
         params.username = this.username;
         params.passkey = this.passkey;
         params.action = 'search-torrents';
 
-        let res = await fetch(api + '?' + querystring.stringify(params));
+        let res = await fetch(api + '?' + querystring.stringify(params), {
+            headers: { Authorization: this.auth }
+        });
+
         res = await res.json();
         if (res.error) throw new Error(res.error);
 
@@ -94,7 +109,11 @@ class FileList {
             times_completed: torrent.times_completed,
             comments: torrent.comments,
             files: torrent.files,
-            small_description: torrent.small_description
+            small_description: torrent.small_description,
+            tv: {
+                season: torrent.tv ? torrent.tv.season : null,
+                episode: torrent.tv ? torrent.tv.episode : null
+            }
         }));
     }
 
@@ -105,6 +124,7 @@ class FileList {
      * @param {String} [params.limit] Maximum number of torrents displayed in the request. Can be 1-100. Default value: 100
      * @param {String} [params.imdb] Accepted as: tt00000000 or 00000000
      * @param {Number|Number[]} [params.category] Valid values: IDs from categories, An array of them is accepted. 
+     * @param {String} [params.output] Valid values: json, rss. - defaults to JSON.
      * @returns {Promise<Torrent[]>}
      */
     async latest(params = {}) {
@@ -115,11 +135,14 @@ class FileList {
         if (params.category && isNaN(params.category) && Array.isArray(params.category)) params.category = params.category.join(',');
         if (params.category && isNaN(params.category)) { console.info("You didn't provide a valid category input. Valid values: IDs from categories, An array of them is accepted. "); params.category = '' };
 
-        params.username = this.username;
-        params.passkey = this.passkey;
+        if (params.output && !['json', 'rss'].includes(params.output.toLowerCase())) { console.info("You didn't provide a valid output, defaulting to the output of JSON."); params.output = 'json'; }
+
         params.action = 'latest-torrents';
-        
-        let res = await fetch(api + '?' + querystring.stringify(params));
+
+        let res = await fetch(api + '?' + querystring.stringify(params), {
+            headers: { Authorization: this.auth }
+        });
+
         res = await res.json();
         if (res.error) throw new Error(res.error);
 
@@ -140,7 +163,11 @@ class FileList {
             times_completed: torrent.times_completed,
             comments: torrent.comments,
             files: torrent.files,
-            small_description: torrent.small_description
+            small_description: torrent.small_description,
+            tv: {
+                season: torrent.tv ? torrent.tv.season : null,
+                episode: torrent.tv ? torrent.tv.episode : null
+            }
         }));
     }
 }

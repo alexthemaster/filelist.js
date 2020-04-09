@@ -22,7 +22,12 @@ FL.search({
     // These can either be a 0 (for false) or 1 (for true)
     moderated: 1,
     internal: 0,
-    freeleech: 1
+    freeleech: 1,
+    // This defaults to json - can be either json or rss
+    output: 'json',
+    // These can be integers 
+    season: null,
+    episode: null
 }).then(console.log).catch(console.error)
 
 
@@ -57,7 +62,8 @@ const returned = {
     times_completed: 31605,
     comments: 86,
     files: 4,
-    small_description: ''
+    small_description: '',
+    tv: { season: null, episode: null }
 }
 ```
 Your passkey can be obtained from [here](https://filelist.ro/my.php)
