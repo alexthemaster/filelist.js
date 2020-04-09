@@ -81,8 +81,6 @@ class FileList {
 
         if (params.episode && (isNaN(params.episode))) { console.info("You didn't provide a valid integer value for episode. Valid values: integers"); params.episode = '' };
 
-        params.username = this.username;
-        params.passkey = this.passkey;
         params.action = 'search-torrents';
 
         let res = await fetch(api + '?' + querystring.stringify(params), {
