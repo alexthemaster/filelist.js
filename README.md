@@ -1,7 +1,7 @@
 # filelist.js
 ## A simple FileList wrapper made using Node.js
 
-### Note: this library doesn't have rate limiting implemented! You can only request content from FileList.ro's API 150 times an hour or roughly 2.5 times a minute, so use with caution!
+### Note: this library doesn't have rate limiting implemented! You can only request content from FileList.io's API 150 times an hour or roughly 2.5 times a minute, so use with caution!
 
 Installation: `npm install filelist.js`
 
@@ -50,9 +50,9 @@ const returned = {
     imdb: null,
     freeleech: false,
     upload_date: '2009-01-13 18:49:55',
-    download_link: 'https://filelist.ro/download.php?id=42487&passkey=your_passkey',
+    download_link: 'https://filelist.io/download.php?id=42487&passkey=your_passkey',
     // This will only be available if freeleech is false, otherwise it's null
-    download_with_fltoken: 'https://filelist.ro/download.php?id=42487&passkey=your_passkey&usetoken=1',
+    download_with_fltoken: 'https://filelist.io/download.php?id=42487&passkey=your_passkey&usetoken=1',
     size: 551269586,
     internal: false,
     moderated: true,
@@ -66,7 +66,7 @@ const returned = {
     tv: { season: null, episode: null }
 }
 ```
-Your passkey can be obtained from [here](https://filelist.ro/my.php)
+Your passkey can be obtained from [here](https://filelist.io/my.php)
 
 Category IDs:
 
