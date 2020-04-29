@@ -9,6 +9,7 @@ const imdb_regex = /^([1-9]+|tt[1-9]+)/g;
  * @property {string} name The name of the torrent
  * @property {string} imdb The imdb ID of the torrent
  * @property {boolean} freeleech Whether or not the torrent is freeleech
+ * @property {boolean} doubleup Whether or not this torrent counts as a double upload
  * @property {Date} upload_date The upload date of the torrent
  * @property {URL} download_link The download URL of this torrent
  * @property {URL} [download_with_fltoken] The download URL of this torrent (uses one of your FLTokens) - note: shown if torrent is not freeleech, otherwise it's null
@@ -54,6 +55,7 @@ class FileList {
      * @param {number} [params.moderated] Valid values: 0, 1
      * @param {number} [params.internal] Valid values: 0, 1
      * @param {number} [params.freeleech] Valid values: 0, 1
+     * @param {number} [params.doubleup] Valid values: 0, 1
      * @param {string} [params.output] Valid values: json, rss. - defaults to JSON.
      * @param {number} [params.season] Valid values: integers
      * @param {number} [params.episode] Valid values: integers
@@ -74,6 +76,8 @@ class FileList {
         if (params.internal && (isNaN(params.internal) || ![0, 1].includes(params.internal))) { console.info("You didn't provide a valid internal value. Valid values: 0, 1"); params.internal = '' };
 
         if (params.freeleech && (isNaN(params.freeleech) || ![0, 1].includes(params.freeleech))) { console.info("You didn't provide a valid freeleech value. Valid values: 0, 1"); params.freeleech = '' };
+
+        if (params.doubleup && (isNaN(params.doubleup) || ![0, 1].includes(params.doubleup))) { console.info("You didn't provide a valid doubleup value. Valid values: 0, 1"); params.doubleup = '' };
 
         if (params.output && !['json', 'rss'].includes(params.output.toLowerCase())) { console.info("You didn't provide a valid output, defaulting to the output of JSON."); params.output = 'json'; }
 
@@ -149,6 +153,7 @@ class FileList {
             name: torrent.name,
             imdb: torrent.imdb,
             freeleech: !!torrent.freeleech,
+            doubleup: !!torrent.doubleup,
             upload_date: torrent.upload_date,
             download_link: torrent.download_link,
             download_with_fltoken: !!torrent.freeleech ? null : torrent.download_link + '&usetoken=1',
