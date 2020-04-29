@@ -4,27 +4,27 @@ const querystring = require('querystring')
 const imdb_regex = /^([1-9]+|tt[1-9]+)/g;
 
 /**
- * @typedef {Object} Torrent
- * @property {Number} id The ID of the torrent
- * @property {String} name The name of the torrent
- * @property {String} imdb The imdb ID of the torrent
- * @property {Boolean} freeleech Whether or not the torrent is freeleech
+ * @typedef {object} Torrent
+ * @property {number} id The ID of the torrent
+ * @property {string} name The name of the torrent
+ * @property {string} imdb The imdb ID of the torrent
+ * @property {boolean} freeleech Whether or not the torrent is freeleech
  * @property {Date} upload_date The upload date of the torrent
  * @property {URL} download_link The download URL of this torrent
  * @property {URL} [download_with_fltoken] The download URL of this torrent (uses one of your FLTokens) - note: shown if torrent is not freeleech, otherwise it's null
- * @property {Number} size The size of the torrent in bytes
- * @property {Boolean} internal Whether or not this torrent was uploaded by the FileList internal team
- * @property {Boolean} moderated Whether or not this torrent is moderated
- * @property {String} category The category this torrent is in
- * @property {Number} seeders The number of people seeding this torrent
- * @property {Number} leechers The number of people leeching (downloading) this torrent
- * @property {Number} times_completed The number of times this torrent was snatched (downloaded)
- * @property {Number} comments The number of comments on the torrent
- * @property {Number} files The number of files this torrent has
- * @property {String} small_description A small description of the torrent
- * @property {Object} [tv] An object containing the season / episode details of this torrent - if applies
- * @property {Number|null} [tv.season]
- * @property {Number|null} [tv.episode] 
+ * @property {number} size The size of the torrent in bytes
+ * @property {boolean} internal Whether or not this torrent was uploaded by the FileList internal team
+ * @property {boolean} moderated Whether or not this torrent is moderated
+ * @property {string} category The category this torrent is in
+ * @property {number} seeders The number of people seeding this torrent
+ * @property {number} leechers The number of people leeching (downloading) this torrent
+ * @property {number} times_completed The number of times this torrent was snatched (downloaded)
+ * @property {number} comments The number of comments on the torrent
+ * @property {number} files The number of files this torrent has
+ * @property {string} small_description A small description of the torrent
+ * @property {object} [tv] An object containing the season / episode details of this torrent - if applies
+ * @property {number|null} [tv.season]
+ * @property {number|null} [tv.episode] 
  */
 
 /**
@@ -33,8 +33,8 @@ const imdb_regex = /^([1-9]+|tt[1-9]+)/g;
  */
 class FileList {
     /**
-     * @param {String} username Your filelist.ro username
-     * @param {String} passkey Your filelist.ro passkey
+     * @param {string} username Your filelist.ro username
+     * @param {string} passkey Your filelist.ro passkey
      */
     constructor(username, passkey) {
         if (!username) throw new Error('Please enter your FileList username.');
@@ -47,16 +47,16 @@ class FileList {
     /**
      * Search for a torrent on filelist.ro
      * @async
-     * @param {Object} params
-     * @param {String} [params.type=name] The type of the search. This can either be imdb or name - defaults to name
-     * @param {String} params.query The query for the search. If you choose imdb as type, it is accepted in two forms: tt00000000 or 00000000
-     * @param {Number|Number[]} [params.category] Valid values: IDs from categories, An array of them is accepted. 
-     * @param {Number} [params.moderated] Valid values: 0, 1
-     * @param {Number} [params.internal] Valid values: 0, 1
-     * @param {Number} [params.freeleech] Valid values: 0, 1
-     * @param {String} [params.output] Valid values: json, rss. - defaults to JSON.
-     * @param {Number} [params.season] Valid values: integers
-     * @param {Number} [params.episode] Valid values: integers
+     * @param {object} params
+     * @param {string} [params.type=name] The type of the search. This can either be imdb or name - defaults to name
+     * @param {string} params.query The query for the search. If you choose imdb as type, it is accepted in two forms: tt00000000 or 00000000
+     * @param {number|number[]} [params.category] Valid values: IDs from categories, An array of them is accepted. 
+     * @param {number} [params.moderated] Valid values: 0, 1
+     * @param {number} [params.internal] Valid values: 0, 1
+     * @param {number} [params.freeleech] Valid values: 0, 1
+     * @param {string} [params.output] Valid values: json, rss. - defaults to JSON.
+     * @param {number} [params.season] Valid values: integers
+     * @param {number} [params.episode] Valid values: integers
      * @returns {Promise<Torrent[]>}
      */
     async search(params = { type: 'name' }) {
@@ -118,11 +118,11 @@ class FileList {
     /**
      * Look up the latest torrents uploaded to filelist.ro
      * @async
-     * @param {Object} params
-     * @param {String} [params.limit] Maximum number of torrents displayed in the request. Can be 1-100. Default value: 100
-     * @param {String} [params.imdb] Accepted as: tt00000000 or 00000000
-     * @param {Number|Number[]} [params.category] Valid values: IDs from categories, An array of them is accepted. 
-     * @param {String} [params.output] Valid values: json, rss. - defaults to JSON.
+     * @param {object} params
+     * @param {string} [params.limit] Maximum number of torrents displayed in the request. Can be 1-100. Default value: 100
+     * @param {string} [params.imdb] Accepted as: tt00000000 or 00000000
+     * @param {number|number[]} [params.category] Valid values: IDs from categories, An array of them is accepted. 
+     * @param {string} [params.output] Valid values: json, rss. - defaults to JSON.
      * @returns {Promise<Torrent[]>}
      */
     async latest(params = {}) {
