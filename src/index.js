@@ -34,8 +34,8 @@ const imdb_regex = /^([1-9]+|tt[1-9]+)/g;
  */
 class FileList {
     /**
-     * @param {string} username Your filelist.ro username
-     * @param {string} passkey Your filelist.ro passkey
+     * @param {string} username Your filelist.io username
+     * @param {string} passkey Your filelist.io passkey
      */
     constructor(username, passkey) {
         if (!username) throw new Error('Please enter your FileList username.');
@@ -46,7 +46,7 @@ class FileList {
     }
 
     /**
-     * Search for a torrent on filelist.ro
+     * Search for a torrent on filelist.io
      * @async
      * @param {object} params
      * @param {string} [params.type=name] The type of the search. This can either be imdb or name - defaults to name
@@ -120,7 +120,7 @@ class FileList {
     }
 
     /**
-     * Look up the latest torrents uploaded to filelist.ro
+     * Look up the latest torrents uploaded to filelist.io
      * @async
      * @param {object} params
      * @param {string} [params.limit] Maximum number of torrents displayed in the request. Can be 1-100. Default value: 100
