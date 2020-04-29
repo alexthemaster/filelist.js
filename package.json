@@ -1,8 +1,12 @@
 {
   "name": "filelist.js",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "A FileList API Wrapper made using Node.js",
   "main": "src/index.js",
+  "files": ["/src"],
+  "scripts": {
+    "docs": "rm -rf ./docs && jsdoc src/index.js -t ./node_modules/minami -R README.md -d ./docs"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexthemaster/filelist.js.git"
@@ -21,5 +25,8 @@
   "homepage": "https://github.com/alexthemaster/filelist.js#readme",
   "dependencies": {
     "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "minami": "^1.2.3"
   }
 }

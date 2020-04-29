@@ -5,6 +5,10 @@
 
 Installation: `npm install filelist.js`
 
+Documentation: [here](https://alexthemaster.github.io/filelist.js)
+
+<br>
+
 Usage example: 
 ```js
 const FileList = require('filelist.js');
@@ -23,6 +27,7 @@ FL.search({
     moderated: 1,
     internal: 0,
     freeleech: 1,
+    doubleup: 0,
     // This defaults to json - can be either json or rss
     output: 'json',
     // These can be integers 
@@ -49,6 +54,7 @@ const returned = {
     name: 'Big.Tits.at.School.Brazzers.Expose-ERiKHERLOV',
     imdb: null,
     freeleech: false,
+    doubleup: false,
     upload_date: '2009-01-13 18:49:55',
     download_link: 'https://filelist.io/download.php?id=42487&passkey=your_passkey',
     // This will only be available if freeleech is false, otherwise it's null

@@ -1,4 +1,45 @@
-const { api, passkey_url } = require('./static.json');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>index.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="FileList.html">FileList</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="FileList.html#latest">latest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="FileList.html#search">search</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const { api, passkey_url } = require('./static.json');
 const fetch = require('node-fetch');
 const querystring = require('querystring')
 const imdb_regex = /^([1-9]+|tt[1-9]+)/g;
@@ -30,7 +71,7 @@ const imdb_regex = /^([1-9]+|tt[1-9]+)/g;
 
 /**
  * @class
- * @author Alex Kovacs <alex@atm.moe>
+ * @author Alex Kovacs &lt;alex@atm.moe>
  * @license MIT
  */
 class FileList {
@@ -60,7 +101,7 @@ class FileList {
      * @param {string} [params.output] Valid values: json, rss. - defaults to JSON.
      * @param {number} [params.season] Valid values: integers
      * @param {number} [params.episode] Valid values: integers
-     * @returns {Promise<Torrent[]>}
+     * @returns {Promise&lt;Torrent[]>}
      * @example search({ type: 'name', query: 'The Haunting of the Hill House', category: 21, freeleech: 1 })
      */
     async search(params = { type: 'name' }) {
@@ -68,24 +109,24 @@ class FileList {
 
         if (!params.query) throw new Error('Please provide a search query!');
 
-        if (params.type === 'imdb' && !imdb_regex.test(params.query)) { console.info("It looks like you selected imdb as the search type, but didn't provide a valid imdb query search. Defaulting to name type searching."); params.type = 'name'; }
+        if (params.type === 'imdb' &amp;&amp; !imdb_regex.test(params.query)) { console.info("It looks like you selected imdb as the search type, but didn't provide a valid imdb query search. Defaulting to name type searching."); params.type = 'name'; }
 
-        if (params.category && isNaN(params.category) && Array.isArray(params.category)) params.category = params.category.join(',');
-        if (params.category && isNaN(params.category)) { console.info("You didn't provide a valid category input. Valid values: IDs from categories, An array of them is accepted. "); params.category = '' };
+        if (params.category &amp;&amp; isNaN(params.category) &amp;&amp; Array.isArray(params.category)) params.category = params.category.join(',');
+        if (params.category &amp;&amp; isNaN(params.category)) { console.info("You didn't provide a valid category input. Valid values: IDs from categories, An array of them is accepted. "); params.category = '' };
 
-        if (params.moderated && (isNaN(params.moderated) || ![0, 1].includes(params.moderated))) { console.info("You didn't provide a valid moderated value. Valid values: 0, 1"); params.moderated = '' };
+        if (params.moderated &amp;&amp; (isNaN(params.moderated) || ![0, 1].includes(params.moderated))) { console.info("You didn't provide a valid moderated value. Valid values: 0, 1"); params.moderated = '' };
 
-        if (params.internal && (isNaN(params.internal) || ![0, 1].includes(params.internal))) { console.info("You didn't provide a valid internal value. Valid values: 0, 1"); params.internal = '' };
+        if (params.internal &amp;&amp; (isNaN(params.internal) || ![0, 1].includes(params.internal))) { console.info("You didn't provide a valid internal value. Valid values: 0, 1"); params.internal = '' };
 
-        if (params.freeleech && (isNaN(params.freeleech) || ![0, 1].includes(params.freeleech))) { console.info("You didn't provide a valid freeleech value. Valid values: 0, 1"); params.freeleech = '' };
+        if (params.freeleech &amp;&amp; (isNaN(params.freeleech) || ![0, 1].includes(params.freeleech))) { console.info("You didn't provide a valid freeleech value. Valid values: 0, 1"); params.freeleech = '' };
 
-        if (params.doubleup && (isNaN(params.doubleup) || ![0, 1].includes(params.doubleup))) { console.info("You didn't provide a valid doubleup value. Valid values: 0, 1"); params.doubleup = '' };
+        if (params.doubleup &amp;&amp; (isNaN(params.doubleup) || ![0, 1].includes(params.doubleup))) { console.info("You didn't provide a valid doubleup value. Valid values: 0, 1"); params.doubleup = '' };
 
-        if (params.output && !['json', 'rss'].includes(params.output.toLowerCase())) { console.info("You didn't provide a valid output, defaulting to the output of JSON."); params.output = 'json'; }
+        if (params.output &amp;&amp; !['json', 'rss'].includes(params.output.toLowerCase())) { console.info("You didn't provide a valid output, defaulting to the output of JSON."); params.output = 'json'; }
 
-        if (params.season && (isNaN(params.season))) { console.info("You didn't provide a valid integer value for season. Valid values: integers"); params.season = '' };
+        if (params.season &amp;&amp; (isNaN(params.season))) { console.info("You didn't provide a valid integer value for season. Valid values: integers"); params.season = '' };
 
-        if (params.episode && (isNaN(params.episode))) { console.info("You didn't provide a valid integer value for episode. Valid values: integers"); params.episode = '' };
+        if (params.episode &amp;&amp; (isNaN(params.episode))) { console.info("You didn't provide a valid integer value for episode. Valid values: integers"); params.episode = '' };
 
         params.action = 'search-torrents';
 
@@ -103,7 +144,7 @@ class FileList {
             freeleech: !!torrent.freeleech,
             upload_date: torrent.upload_date,
             download_link: torrent.download_link,
-            download_with_fltoken: !!torrent.freeleech ? null : torrent.download_link + '&usetoken=1',
+            download_with_fltoken: !!torrent.freeleech ? null : torrent.download_link + '&amp;usetoken=1',
             size: torrent.size,
             internal: !!torrent.internal,
             moderated: !!torrent.moderated,
@@ -129,18 +170,18 @@ class FileList {
      * @param {string} [params.imdb] Accepted as: tt00000000 or 00000000
      * @param {number|number[]} [params.category] Valid values: IDs from categories, An array of them is accepted. 
      * @param {string} [params.output] Valid values: json, rss. - defaults to JSON.
-     * @returns {Promise<Torrent[]>}
+     * @returns {Promise&lt;Torrent[]>}
      * @example latest({ limit: 1, category: 27 })
      */
     async latest(params = {}) {
-        if (params.limit && (isNaN(params.limit) || params.limit < 1 || params.limit > 100)) { console.info("You didn't provide a valid limit. Can be 1-100. Defaulting to 100."); params.limit = ''; }
+        if (params.limit &amp;&amp; (isNaN(params.limit) || params.limit &lt; 1 || params.limit > 100)) { console.info("You didn't provide a valid limit. Can be 1-100. Defaulting to 100."); params.limit = ''; }
 
-        if (params.imdb && !imdb_regex.test(params.imdb)) { console.info("You didn't provide a valid imdb search. Defaulting to none."); params.imdb = ''; }
+        if (params.imdb &amp;&amp; !imdb_regex.test(params.imdb)) { console.info("You didn't provide a valid imdb search. Defaulting to none."); params.imdb = ''; }
 
-        if (params.category && isNaN(params.category) && Array.isArray(params.category)) params.category = params.category.join(',');
-        if (params.category && isNaN(params.category)) { console.info("You didn't provide a valid category input. Valid values: IDs from categories, An array of them is accepted. "); params.category = '' };
+        if (params.category &amp;&amp; isNaN(params.category) &amp;&amp; Array.isArray(params.category)) params.category = params.category.join(',');
+        if (params.category &amp;&amp; isNaN(params.category)) { console.info("You didn't provide a valid category input. Valid values: IDs from categories, An array of them is accepted. "); params.category = '' };
 
-        if (params.output && !['json', 'rss'].includes(params.output.toLowerCase())) { console.info("You didn't provide a valid output, defaulting to the output of JSON."); params.output = 'json'; }
+        if (params.output &amp;&amp; !['json', 'rss'].includes(params.output.toLowerCase())) { console.info("You didn't provide a valid output, defaulting to the output of JSON."); params.output = 'json'; }
 
         params.action = 'latest-torrents';
 
@@ -159,7 +200,7 @@ class FileList {
             doubleup: !!torrent.doubleup,
             upload_date: torrent.upload_date,
             download_link: torrent.download_link,
-            download_with_fltoken: !!torrent.freeleech ? null : torrent.download_link + '&usetoken=1',
+            download_with_fltoken: !!torrent.freeleech ? null : torrent.download_link + '&amp;usetoken=1',
             size: torrent.size,
             internal: !!torrent.internal,
             moderated: !!torrent.moderated,
@@ -178,4 +219,22 @@ class FileList {
     }
 }
 
-module.exports = FileList;
+module.exports = FileList;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Thu Apr 30 2020 00:59:00 GMT+0300 (Eastern European Summer Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
