@@ -57,8 +57,6 @@ const returned = {
     doubleup: false,
     upload_date: '2009-01-13 18:49:55',
     download_link: 'https://filelist.io/download.php?id=42487&passkey=your_passkey',
-    // This will only be available if freeleech is false, otherwise it's null
-    download_with_fltoken: 'https://filelist.io/download.php?id=42487&passkey=your_passkey&usetoken=1',
     size: 551269586,
     internal: false,
     moderated: true,

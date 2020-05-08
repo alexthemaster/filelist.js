@@ -12,7 +12,6 @@ const imdb_regex = /^([1-9]+|tt[1-9]+)/g;
  * @property {boolean} doubleup Whether or not this torrent counts as a double upload
  * @property {Date} upload_date The upload date of the torrent
  * @property {URL} download_link The download URL of this torrent
- * @property {URL} [download_with_fltoken] The download URL of this torrent (uses one of your FLTokens) - note: shown if torrent is not freeleech, otherwise it's null
  * @property {number} size The size of the torrent in bytes
  * @property {boolean} internal Whether or not this torrent was uploaded by the FileList internal team
  * @property {boolean} moderated Whether or not this torrent is moderated
@@ -103,7 +102,6 @@ class FileList {
             freeleech: !!torrent.freeleech,
             upload_date: torrent.upload_date,
             download_link: torrent.download_link,
-            download_with_fltoken: !!torrent.freeleech ? null : torrent.download_link + '&usetoken=1',
             size: torrent.size,
             internal: !!torrent.internal,
             moderated: !!torrent.moderated,
@@ -159,7 +157,6 @@ class FileList {
             doubleup: !!torrent.doubleup,
             upload_date: torrent.upload_date,
             download_link: torrent.download_link,
-            download_with_fltoken: !!torrent.freeleech ? null : torrent.download_link + '&usetoken=1',
             size: torrent.size,
             internal: !!torrent.internal,
             moderated: !!torrent.moderated,
