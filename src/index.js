@@ -11,7 +11,7 @@ const imdb_regex = /^([1-9]+|tt[1-9]+)/g;
  * @property {boolean} freeleech Whether or not the torrent is freeleech
  * @property {boolean} doubleup Whether or not this torrent counts as a double upload
  * @property {Date} upload_date The upload date of the torrent
- * @property {URL} download_link The download URL of this torrent
+ * @property {string} download_link The download URL of this torrent
  * @property {number} size The size of the torrent in bytes
  * @property {boolean} internal Whether or not this torrent was uploaded by the FileList internal team
  * @property {boolean} moderated Whether or not this torrent is moderated
@@ -22,7 +22,7 @@ const imdb_regex = /^([1-9]+|tt[1-9]+)/g;
  * @property {number} comments The number of comments on the torrent
  * @property {number} files The number of files this torrent has
  * @property {string} small_description A small description of the torrent
- * @property {object} [tv] An object containing the season / episode details of this torrent - if applies
+ * @property {object} tv An object containing the season / episode details of this torrent - if applies
  * @property {number|null} [tv.season]
  * @property {number|null} [tv.episode] 
  */
@@ -49,20 +49,20 @@ class FileList {
      * Search for a torrent on filelist.io
      * @async
      * @param {object} params
-     * @param {string} [params.type=name] The type of the search. This can either be imdb or name - defaults to name
+     * @param {'name'|'imdb'} [params.type=name] The type of the search. This can either be imdb or name - defaults to name
      * @param {string} params.query The query for the search. If you choose imdb as type, it is accepted in two forms: tt00000000 or 00000000
      * @param {number|number[]} [params.category] Valid values: IDs from categories, An array of them is accepted. 
      * @param {number} [params.moderated] Valid values: 0, 1
      * @param {number} [params.internal] Valid values: 0, 1
      * @param {number} [params.freeleech] Valid values: 0, 1
      * @param {number} [params.doubleup] Valid values: 0, 1
-     * @param {string} [params.output] Valid values: json, rss. - defaults to JSON.
+     * @param {'json'|'rss'} [params.output] Valid values: json, rss. - defaults to JSON.
      * @param {number} [params.season] Valid values: integers
      * @param {number} [params.episode] Valid values: integers
      * @returns {Promise<Torrent[]>}
      * @example search({ type: 'name', query: 'The Haunting of the Hill House', category: 21, freeleech: 1 })
      */
-    async search(params = { type: 'name' }) {
+    async search(params = { type: 'name', output: 'json' }) {
         if (!['name', 'imdb'].includes(params.type.toLowerCase())) { console.info("You didn't provide a valid type, defaulting to type of name."); params.type = 'name'; }
 
         if (!params.query) throw new Error('Please provide a search query!');
@@ -123,14 +123,14 @@ class FileList {
      * Look up the latest torrents uploaded to filelist.io
      * @async
      * @param {object} params
-     * @param {string} [params.limit] Maximum number of torrents displayed in the request. Can be 1-100. Default value: 100
+     * @param {number} [params.limit] Maximum number of torrents displayed in the request. Can be 1-100. Default value: 100
      * @param {string} [params.imdb] Accepted as: tt00000000 or 00000000
      * @param {number|number[]} [params.category] Valid values: IDs from categories, An array of them is accepted. 
-     * @param {string} [params.output] Valid values: json, rss. - defaults to JSON.
+     * @param {'json'|'rss'} [params.output] Valid values: json, rss. - defaults to JSON.
      * @returns {Promise<Torrent[]>}
      * @example latest({ limit: 1, category: 27 })
      */
-    async latest(params = {}) {
+    async latest(params = { output: 'json', limit: 100 }) {
         if (params.limit && (isNaN(params.limit) || params.limit < 1 || params.limit > 100)) { console.info("You didn't provide a valid limit. Can be 1-100. Defaulting to 100."); params.limit = ''; }
 
         if (params.imdb && !imdb_regex.test(params.imdb)) { console.info("You didn't provide a valid imdb search. Defaulting to none."); params.imdb = ''; }
