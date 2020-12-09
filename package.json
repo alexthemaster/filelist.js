@@ -36,7 +36,7 @@
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
-    "husky": "^4.2.5",
+    "husky": "^4.3.5",
     "minami": "^1.2.3"
   }
 }
