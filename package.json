@@ -11,11 +11,6 @@
   "scripts": {
     "docs": "rm -rf ./docs && jsdoc src/index.js -t ./node_modules/minami -R README.md -d ./docs"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run docs && git add ."
-    }
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexthemaster/filelist.js.git"
