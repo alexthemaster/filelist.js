@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/alexthemaster/filelist.js#readme",
   "dependencies": {
-    "node-fetch": "^2.6.5"
+    "node-fetch": "^2.6.6"
   },
   "devDependencies": {
     "husky": "^4.3.8",
