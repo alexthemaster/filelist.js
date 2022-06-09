@@ -1,7 +1,7 @@
 # filelist.js
 ## A simple FileList wrapper made using Node.js
 
-### Note: this library doesn't have rate limiting implemented! You can only request content from FileList.io's API 150 times an hour or roughly 2.5 times a minute, so use with caution!
+### Important to know: FileList.io's API has a rate limit of 150 requests an hour, so use with caution! When the rate limit is hit the library will retry to run your request every 10 minutes.
 
 Installation: `npm install filelist.js`
 

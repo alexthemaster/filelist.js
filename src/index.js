@@ -1,6 +1,5 @@
 const { api, passkey_url } = require('./static.json');
-const fetch = require('node-fetch');
-const querystring = require('querystring')
+const { fetch } = require('@sapphire/fetch');
 const imdb_regex = /^([1-9]+|tt[1-9]+)/g;
 
 /**
@@ -56,13 +55,18 @@ class FileList {
      * @param {number} [params.internal] Valid values: 0, 1
      * @param {number} [params.freeleech] Valid values: 0, 1
      * @param {number} [params.doubleup] Valid values: 0, 1
-     * @param {'json'|'rss'} [params.output] Valid values: json, rss. - defaults to JSON.
+     * @param {'json'|'rss'} [params.output=json] Valid values: json, rss. - defaults to JSON.
      * @param {number} [params.season] Valid values: integers
      * @param {number} [params.episode] Valid values: integers
      * @returns {Promise<Torrent[]>}
      * @example search({ type: 'name', query: 'The Haunting of the Hill House', category: 21, freeleech: 1 })
      */
-    async search(params = { type: 'name', output: 'json' }) {
+    async search(params) {
+        params = params || { type: 'name', output: 'json' };
+        params.type = params.type || 'name';
+        params.output = params.output || 'json';
+        params.action = 'search-torrents';
+
         if (!['name', 'imdb'].includes(params.type.toLowerCase())) { console.info("You didn't provide a valid type, defaulting to type of name."); params.type = 'name'; }
 
         if (!params.query) throw new Error('Please provide a search query!');
@@ -86,13 +90,19 @@ class FileList {
 
         if (params.episode && (isNaN(params.episode))) { console.info("You didn't provide a valid integer value for episode. Valid values: integers"); params.episode = '' };
 
-        params.action = 'search-torrents';
-
-        let res = await fetch(api + '?' + querystring.stringify(params), {
+        let res = await fetch(api + '?' + new URLSearchParams(params).toString(), {
             headers: { Authorization: this.auth }
+        }).catch(err => {
+            if (err.code == 429) {
+                console.log('Rate limit hit... retrying in 10 minutes.');
+                return new Promise((resolve, _reject) => {
+                    setTimeout(() => {
+                        resolve(this.search(params));
+                    }, 10000 * 60);
+                })
+            } else throw new Error(err);
         });
 
-        res = await res.json();
         if (res.error) throw new Error(res.error);
 
         return res.map(torrent => ({
@@ -123,14 +133,19 @@ class FileList {
      * Look up the latest torrents uploaded to filelist.io
      * @async
      * @param {object} params
-     * @param {number} [params.limit] Maximum number of torrents displayed in the request. Can be 1-100. Default value: 100
+     * @param {number} [params.limit=100] Maximum number of torrents displayed in the request. Can be 1-100. Default value: 100
      * @param {string} [params.imdb] Accepted as: tt00000000 or 00000000
      * @param {number|number[]} [params.category] Valid values: IDs from categories, An array of them is accepted. 
-     * @param {'json'|'rss'} [params.output] Valid values: json, rss. - defaults to JSON.
+     * @param {'json'|'rss'} [params.output=json] Valid values: json, rss. - defaults to JSON.
      * @returns {Promise<Torrent[]>}
      * @example latest({ limit: 1, category: 27 })
      */
-    async latest(params = { output: 'json', limit: 100 }) {
+    async latest(params) {
+        params = params || {};
+        params.output = params.output || 'json';
+        params.limit = params.limit || 100;
+        params.action = 'latest-torrents';
+
         if (params.limit && (isNaN(params.limit) || params.limit < 1 || params.limit > 100)) { console.info("You didn't provide a valid limit. Can be 1-100. Defaulting to 100."); params.limit = ''; }
 
         if (params.imdb && !imdb_regex.test(params.imdb)) { console.info("You didn't provide a valid imdb search. Defaulting to none."); params.imdb = ''; }
@@ -140,13 +155,19 @@ class FileList {
 
         if (params.output && !['json', 'rss'].includes(params.output.toLowerCase())) { console.info("You didn't provide a valid output, defaulting to the output of JSON."); params.output = 'json'; }
 
-        params.action = 'latest-torrents';
-
-        let res = await fetch(api + '?' + querystring.stringify(params), {
+        let res = await fetch(api + '?' + new URLSearchParams(params).toString(), {
             headers: { Authorization: this.auth }
+        }).catch(err => {
+            if (err.code == 429) {
+                console.log('Rate limit hit... retrying in 10 minutes.');
+                return new Promise((resolve, _reject) => {
+                    setTimeout(() => {
+                        resolve(this.search(params));
+                    }, 10000 * 60);
+                })
+            } else throw new Error(err);
         });
 
-        res = await res.json();
         if (res.error) throw new Error(res.error);
 
         return res.map(torrent => ({
