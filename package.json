@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/alexthemaster/filelist.js#readme",
   "dependencies": {
-    "@sapphire/fetch": "^2.4.0"
+    "@sapphire/fetch": "^2.4.1"
   },
   "devDependencies": {
     "minami": "^1.2.3"
