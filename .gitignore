@@ -1,3 +1,5 @@
 test.js
-node_modules/
-docs/
+node_modules
+docs
+dist
+.yarn/install-state.gz
