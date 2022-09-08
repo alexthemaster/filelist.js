@@ -25,7 +25,7 @@
     "lint:fix": "yarn eslint src/ --fix",
     "format": "yarn prettier --write \"src/**/*.ts\"",
     "docs": "yarn typedoc src/index.ts --readme README.md",
-    "prepack": "yarn format && farm lint:fix && yarn build"
+    "prepack": "yarn format && yarn lint:fix && yarn build"
   },
   "repository": {
     "type": "git",
