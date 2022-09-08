@@ -16,11 +16,12 @@ export class FileList {
     params: SearchParams | SearchParamsIMDB
   ): Promise<Torrent[] | null> {
     type SearchParamsAction =
-      | ({ action: "search-torrents" } & SearchParams)
-      | ({ action: "search-torrents" } & SearchParamsIMDB);
+      | ({ action: "search-torrents"; output: "json" } & SearchParams)
+      | ({ action: "search-torrents"; output: "json" } & SearchParamsIMDB);
 
     const searchParams: SearchParamsAction = {
       action: "search-torrents",
+      output: "json",
       ...params,
     };
 
@@ -32,10 +33,14 @@ export class FileList {
    * @example latest({ limit: 1, category: 27 })
    */
   public latest(params: LatestParams): Promise<Torrent[] | null> {
-    type SearchParamsAction = { action: "latest-torrents" } & LatestParams;
+    type SearchParamsAction = {
+      action: "latest-torrents";
+      output: "json";
+    } & LatestParams;
 
     const searchParams: SearchParamsAction = {
       action: "latest-torrents",
+      output: "json",
       ...params,
     };
 
@@ -110,7 +115,6 @@ export interface SearchParams {
   internal?: 0 | 1;
   freeleech?: 0 | 1;
   doubleup?: 0 | 1;
-  output?: "json" | "rss";
   season?: number;
   episode?: number;
 }
@@ -125,7 +129,6 @@ export interface SearchParamsIMDB {
   internal?: 0 | 1;
   freeleech?: 0 | 1;
   doubleup?: 0 | 1;
-  output?: "json" | "rss";
   season?: number;
   episode?: number;
 }
@@ -137,7 +140,6 @@ export interface LatestParams {
   imdb?: IMDB;
   /** Category IDs, multiple values are accepted if in an array. */
   category?: Category | Category[];
-  output?: "json" | "rss";
 }
 
 export interface Torrent {
