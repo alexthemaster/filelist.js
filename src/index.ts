@@ -61,7 +61,7 @@ export class FileList {
     ).catch((err: { code: 400 | 401 | 403 | 429 | 503 }) => {
       if (err.code == 429) {
         console.info("Rate limit hit... retrying in 10 minutes.");
-        new Promise((resolve) => {
+        return new Promise((resolve) => {
           setTimeout(() => {
             resolve(this.query(params));
           }, 10000 * 60);

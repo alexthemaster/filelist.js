@@ -1,6 +1,6 @@
 {
   "name": "filelist.js",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "A FileList API Wrapper made using Node.js",
   "main": "dist/index.js",
   "eslintConfig": {
