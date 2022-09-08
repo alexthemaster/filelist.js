@@ -1,0 +1,55 @@
+name: Continuous Integration
+on:
+  push:
+    branches:
+      - master
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts"
+          cache: "yarn"
+      - name: Set Git parameters
+        run: |
+          git config --global user.name Alex Kovacs
+          git config --global user.email 31011461+alexthemaster@users.noreply.github.com
+      - name: Install dependencies
+        run: yarn --immutable
+      - name: Clone the gh-pages branch
+        run: |
+          mkdir gh-pages
+          cd gh-pages
+          git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/alexthemaster/filelist.js.git .
+          git checkout gh-pages
+      - name: Build the docs
+        run: yarn docs
+      - name: Add files to git and commit them
+        run: |
+          rsync -r ./docs/. ./gh-pages 
+          cd gh-pages
+          git add .
+          git commit -m "docs: ${{ github.sha }}" || true
+      - name: Push files to GitHub
+        run: |
+          cd gh-pages
+          git push origin gh-pages || true
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn --immutable
+      - name: Lint
+        run: yarn lint

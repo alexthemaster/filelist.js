@@ -1,0 +1,11 @@
+{
+    "extends": "@tsconfig/node16/tsconfig.json",
+    "compilerOptions": {
+        "rootDir": "src",
+        "outDir": "dist",
+        "lib": ["DOM", "ESNext"],
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true
+    }
+  }

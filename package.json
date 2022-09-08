@@ -1,18 +1,31 @@
 {
   "name": "filelist.js",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "description": "A FileList API Wrapper made using Node.js",
-  "main": "src/index.js",
-  "types": "typings/index.d.ts",
-  "engines": {
-    "node": ">= 14"
+  "main": "dist/index.js",
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint",
+      "eslint-plugin-tsdoc"
+    ],
+    "root": true
   },
   "files": [
-    "/src",
-    "/typings"
+    "/dist"
   ],
   "scripts": {
-    "docs": "rm -rf ./docs && jsdoc src/index.js -t ./node_modules/minami -R README.md -d ./docs"
+    "build": "yarn tsc",
+    "lint": "eslint src/",
+    "lint:fix": "yarn eslint src/ --fix",
+    "format": "yarn prettier --write \"src/**/*.ts\"",
+    "docs": "yarn typedoc src/index.ts --readme README.md",
+    "prepack": "yarn format && farm lint:fix && yarn build"
   },
   "repository": {
     "type": "git",
@@ -20,7 +33,7 @@
   },
   "keywords": [
     "filelist",
-    "api",
+    "filelist tracker",
     "filelist api",
     "filelist.js",
     "filelist wrapper"
@@ -35,6 +48,16 @@
     "@sapphire/fetch": "^2.4.1"
   },
   "devDependencies": {
-    "minami": "^1.2.3"
-  }
+    "@tsconfig/node16": "^1.0.3",
+    "@types/node": "^18.7.16",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-tsdoc": "^0.2.16",
+    "prettier": "^2.7.1",
+    "typedoc": "^0.23.14",
+    "typescript": "^4.8.2"
+  },
+  "packageManager": "yarn@3.2.3"
 }
