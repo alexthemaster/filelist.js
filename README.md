@@ -1,14 +1,6 @@
 ## A simple FileList wrapper made using Node.js
 
-**IMPORTANT**: This API wrapper is now deprecated.
-
-As announced by EboLLa, the founder of FileList, the site is closing down, and as a result, this API wrapper will cease to function.
-
-For additional information, kindly refer to EboLLa's official announcement on the website.
-
-The site is anticipated to be permanently closed by January 2024, which means the API will no longer be available.
-
-### ⚠️ Good to know: FileList.io's API has a rate limit of 150 requests an hour, so use with caution! When the rate limit is hit the library will attempt to re-query your request every 10 minutes.
+### ⚠️ Important to know: FileList.io's API has a rate limit of 150 requests an hour, so use with caution! When the rate limit is hit the library will attempt to re-query your request every 10 minutes.
 
 Installation: `npm install filelist.js` or `yarn add filelist.js`
 
